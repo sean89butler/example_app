@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>RPG</title>
+	<meta charset="UTF-8">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Example App">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, viewport-fit=cover">
+
+    <link rel="manifest" href="./app.webmanifest">
+    <script src="./scripts.js"></script>
+<style>
+html { top: 0; margin: 0; padding: 0; height: 100%; min-height: calc(100% +
+env(safe-area-inset-top)); padding: env(safe-area-inset-top)
+env(safe-area-inset-right) env(safe-area-inset-bottom)
+env(safe-area-inset-left); width: 100%; z-index: 1; } body { display: flex;
+align-items: center; align-content: center; justify-content: center; position:
+relative; height: 100%; width: 100%; padding: 0; margin: 0; background: red;
+gap: 15px; } button { display: flex; flex-wrap: wrap; align-items: center;
+justify-content: center; width: 120px; height: 80px; border: none;
+border-radius: 12px; color: #ecf0f3; background: #2c2c32; box-shadow: 1px 2px
+5px rgb(0 0 0 / 15%) }
+
+</style>
+
+</head>
+<body id="main">
+    <button id="changeColor" onclick="setRandomColor()">Change BG Color</button>
+    <button id="fullscreen" onclick="toggleFullscreen()">Call Fullscreen Function</button>
+</body>
+<script>
+	let newWorker;
+	window.addEventListener('beforeunload', function () {
+		newWorker.postMessage({
+			action: 'skipWaiting'
+		});
+	});
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./service-worker.js').then(reg => {
+			reg.addEventListener('updatefound', () => {
+				newWorker = reg.installing;
+				newWorker.addEventListener('statechange', () => {
+					switch (newWorker.state) {
+						case 'installed':
+							if (navigator.serviceWorker.controller) {
+                                newWorker.postMessage({
+			                    action: 'skipWaiting'
+		                        });
+							}
+							break;
+					}
+				});
+			});
+
+		});
+		let refreshing;
+		navigator.serviceWorker.addEventListener('controllerchange', function () {
+			if (refreshing) return;
+			window.location.reload();
+			refreshing = true;
+		});
+	};
+</script>
+</html>

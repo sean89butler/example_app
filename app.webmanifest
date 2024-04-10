@@ -1,0 +1,37 @@
+{
+    "display": "fullscreen",
+    "background_color": "#000",
+    "theme_color": "#000",
+    "dir": "ltr",
+    "lang": "en-US",
+    "name": "Example App",
+    "orientation": "any",
+    "short_name": "Example",
+    "icons": [
+        {
+         "src": "./icons/144x144.png",
+         "sizes": "144x144",
+         "type": "image/png",
+         "purpose": "maskable"
+        },
+        {
+         "src": "./icons/196x196.png",
+         "sizes": "196x196",
+         "type": "image/png",
+         "purpose": "maskable"
+        },
+        {
+         "src": "./icons/256x256.png",
+         "sizes": "256x256",
+         "type": "image/png",
+         "purpose": "maskable"
+        },
+        {
+         "src": "./icons/round.png",
+         "sizes": "512x512",
+         "type": "image/png"
+        }
+       ],
+    "description": "Example Application",
+    "start_url": "./"
+}
